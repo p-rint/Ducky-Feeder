@@ -1,0 +1,87 @@
+[gd_scene load_steps=11 format=3 uid="uid://cpqd2ifwimv6r"]
+
+[ext_resource type="Script" uid="uid://bg3tjgk6q804p" path="res://player.gd" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://dogu8m1jikv8s" path="res://cam_pivot.gd" id="2_0xm2m"]
+[ext_resource type="Script" uid="uid://drbw37ft6py1m" path="res://enemy.gd" id="3_h2yge"]
+[ext_resource type="Script" uid="uid://cyik3wwvbkykh" path="res://ui.gd" id="4_1bvp3"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ig7tw"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_0xm2m"]
+sky_material = SubResource("ProceduralSkyMaterial_ig7tw")
+
+[sub_resource type="Environment" id="Environment_h2yge"]
+background_mode = 2
+sky = SubResource("Sky_0xm2m")
+tonemap_mode = 2
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_0xm2m"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_h2yge"]
+size = Vector3(1, 2, 1)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_h2yge"]
+
+[node name="Main" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_h2yge")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+size = Vector3(30, 1, 30)
+
+[node name="Player" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3809767, 0)
+script = ExtResource("1_ig7tw")
+
+[node name="Character" type="Node3D" parent="Player"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player/Character"]
+mesh = SubResource("CapsuleMesh_0xm2m")
+
+[node name="Hurtbox" type="Area3D" parent="Player/Character"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player/Character/Hurtbox"]
+shape = SubResource("BoxShape3D_h2yge")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+shape = SubResource("CapsuleShape3D_h2yge")
+
+[node name="CamPivot" type="Node3D" parent="Player"]
+script = ExtResource("2_0xm2m")
+
+[node name="Camera3D" type="Camera3D" parent="Player/CamPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7358017, 3.8964944)
+
+[node name="Enemies" type="Node3D" parent="."]
+
+[node name="Enemy" type="CharacterBody3D" parent="Enemies"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3809767, -7.7699356)
+script = ExtResource("3_h2yge")
+
+[node name="Character" type="Node3D" parent="Enemies/Enemy"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Enemies/Enemy/Character"]
+mesh = SubResource("CapsuleMesh_0xm2m")
+
+[node name="Hurtbox" type="Area3D" parent="Enemies/Enemy/Character"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Enemies/Enemy/Character/Hurtbox"]
+shape = SubResource("BoxShape3D_h2yge")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Enemies/Enemy"]
+shape = SubResource("CapsuleShape3D_h2yge")
+
+[node name="UI" type="CanvasLayer" parent="."]
+script = ExtResource("4_1bvp3")
+
+[node name="Score" type="Label" parent="UI"]
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_font_sizes/font_size = 60
+text = "Score: 0"

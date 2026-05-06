@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://lfhfv0i8voap"]
+
+[ext_resource type="Script" uid="uid://dsqqafkaqip03" path="res://hitbox.gd" id="1_orx6n"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xrojb"]
+size = Vector3(2, 2, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xrojb"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_orx6n"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.23529412)
+
+[node name="Hitbox" type="Area3D"]
+script = ExtResource("1_orx6n")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+shape = SubResource("BoxShape3D_xrojb")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+mesh = SubResource("BoxMesh_xrojb")
+surface_material_override/0 = SubResource("StandardMaterial3D_orx6n")
+
+[node name="Lifetime" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+autostart = true
