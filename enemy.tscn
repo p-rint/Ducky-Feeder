@@ -1,0 +1,36 @@
+[gd_scene load_steps=7 format=3 uid="uid://dcd0l6ushq3lr"]
+
+[ext_resource type="Script" uid="uid://drbw37ft6py1m" path="res://enemy.gd" id="1_7k104"]
+[ext_resource type="ArrayMesh" uid="uid://d27dis8mopu0h" path="res://addons/Duck.obj" id="2_4gyqm"]
+[ext_resource type="Texture2D" uid="uid://c1bre1m7sduda" path="res://addons/Duck.png" id="2_qi2p4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iifgy"]
+albedo_texture = ExtResource("2_qi2p4")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_h2yge"]
+size = Vector3(1, 2, 1)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_h2yge"]
+
+[node name="Enemy" type="CharacterBody3D"]
+script = ExtResource("1_7k104")
+
+[node name="Character" type="Node3D" parent="."]
+
+[node name="Duck" type="MeshInstance3D" parent="Character"]
+transform = Transform3D(-8.742278e-09, 0, 0.2, 0, 0.2, 0, -0.2, 0, -8.742278e-09, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_iifgy")
+mesh = ExtResource("2_4gyqm")
+
+[node name="Hurtbox" type="Area3D" parent="Character"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Character/Hurtbox"]
+shape = SubResource("BoxShape3D_h2yge")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_h2yge")
+
+[node name="Timers" type="Node" parent="."]
+
+[node name="Stun" type="Timer" parent="Timers"]
+one_shot = true

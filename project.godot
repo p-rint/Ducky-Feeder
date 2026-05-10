@@ -19,6 +19,10 @@ config/icon="res://icon.svg"
 
 AttackFunctions="*res://AttackFunctions.gd"
 
+[display]
+
+window/stretch/mode="canvas_items"
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/godot_super-wakatime/plugin.cfg")
@@ -65,3 +69,4 @@ Attack={
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true

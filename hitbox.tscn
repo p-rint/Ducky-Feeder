@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://lfhfv0i8voap"]
+[gd_scene load_steps=8 format=3 uid="uid://lfhfv0i8voap"]
 
 [ext_resource type="Script" uid="uid://dsqqafkaqip03" path="res://hitbox.gd" id="1_orx6n"]
+[ext_resource type="Texture2D" uid="uid://2y8o3fd2hhcd" path="res://addons/Bread.png" id="2_7ml1o"]
+[ext_resource type="ArrayMesh" uid="uid://btaqxk2inafln" path="res://addons/Bread.obj" id="2_e062h"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xrojb"]
 size = Vector3(2, 2, 2)
@@ -11,19 +13,29 @@ size = Vector3(2, 2, 2)
 transparency = 1
 albedo_color = Color(1, 1, 1, 0.23529412)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gioy4"]
+albedo_texture = ExtResource("2_7ml1o")
+
 [node name="Hitbox" type="Area3D"]
 script = ExtResource("1_orx6n")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 shape = SubResource("BoxShape3D_xrojb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+visible = false
 mesh = SubResource("BoxMesh_xrojb")
 surface_material_override/0 = SubResource("StandardMaterial3D_orx6n")
 
 [node name="Lifetime" type="Timer" parent="."]
-wait_time = 0.1
 one_shot = true
 autostart = true
+
+[node name="Food" type="Node3D" parent="."]
+
+[node name="Bread" type="MeshInstance3D" parent="Food"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_gioy4")
+mesh = ExtResource("2_e062h")
+skeleton = NodePath("../..")

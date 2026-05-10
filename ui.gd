@@ -11,4 +11,4 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	score.text = "Score: " + str(player.score)
+	score.text = "Ducks fed: " + str(player.score)
